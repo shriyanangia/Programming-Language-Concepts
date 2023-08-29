@@ -1,0 +1,65 @@
+For evaluator 
+
+--have function proper (takes list of data and gives back datum)
+--write a function going the other way 
+-- follows pairs 
+
+--takes result of proper and gives list of things you put into it 
+--be of type 
+--asProper::Datum-->Maybe[Datum]
+--how we evaluate pair 
+--everytime i evaluate pair it has to be proper list 
+--turn pair into list (first and remainder elements of list)
+-- what is first element of list 
+--implement each of those idependently  
+--improper list never evaluates, proper list ends in Nil 
+
+---Example Test case ("(+ 1 2 -1 -2)", Just "0")
+--1) we first use the pair function to take everything from the example out
+--2) a list of datum is created using the asProper function 
+--   [+, 1, 2, -1, -2] 
+--3) A separate functionfor each primitive type takes in this list 
+--   and evaluates an answer 
+--   call recurrsively 
+
+
+
+Testing Symbol eq
+--    | x == "eq"   = evaluateEq((asProperList(testParse("(eq? #t #t)"))))
+--    | x == "eq?"   = ((asProperList(properList[Symbol "eq?", Boolean True, Boolean True])))
+      | x == "(eq? #t #t)" = evaluateEq((asProperList(properList[Symbol "eq?", Boolean True, Boolean True])))
+--    | x == "eq"   = evaluateEq((asProperList[Symbol "eq?", Boolean True, Boolean True]))
+--    | x == "eq"   = Just ((asProperList[Symbol "eq?", Boolean True, Boolean True]))
+--    | x == "eq"   = ((asProperList(Cons (Symbol "eq?") (Cons (Boolean True) (Cons (Boolean True) (Nil))))))
+
+Testing Symbol +
+--    | x == fst(Symbol "+") = evaluateSum(asProperList(properList(x)))
+--    | x == "+"    = evaluateSum(asProperList(properList("(+)", Just "0")))
+--    | x == "+"    = evaluateSum(asProperList(Cons (Symbol ("+")) (Cons (Number 1) (Nil))))
+--    | x == "+"    = evaluateSum((asProperList(properList("(+ 1 2 -1 -2)"))))
+
+
+Evaluating Primitive Functions
+--    | x == "(eq? #t #t)" = evaluateEq((asProperList(properList[Symbol "eq?", Boolean True, Boolean True])))
+--    | x == "+"    = evaluateSum(numbers(asProperList(y)))
+--    | x == "-"    = Nothing
+--    | x == "*"    = Nothing
+--    | x == "="    = Nothing
+--    | x == "<"    = Nothing
+--    | x == "<="   = Nothing
+--    | x == ">"    = Nothing
+--    | x == ">="   = Nothing
+
+Evaluating Special Forms (need not evaluate all their arguments)
+--    | x == "if"   = Nothing 
+--    | x == "cond" = Nothing
+--    | x == "and"  = Nothing 
+--    | x == "or"   = Nothing
+
+
+
+evaluator [(Symbol x):(Number xs)]
+evaluator (Cons x y)
+evaluator (Symbol x)
+
+evaluator (Cons (Symbol "+") args) = evaluateSum (asProperList args)
